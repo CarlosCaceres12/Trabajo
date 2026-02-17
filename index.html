@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS OS | GLOBAL NETWORK</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="boot-screen">
+        <div class="boot-content">
+            <div class="logo-spin">💠</div>
+            <div class="boot-text">INITIALIZING GLOBAL UPLINK...</div>
+            <div class="load-bar-wrap"><div class="load-bar"></div></div>
+        </div>
+    </div>
+
+    <canvas id="bg-canvas"></canvas>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+
+    <div class="main-interface">
+        
+        <header>
+            <div class="brand">
+                <i class="fa-solid fa-cube icon-brand"></i> NEXUS <span class="neon-text">OS</span>
+            </div>
+            
+            <nav class="cyber-tabs">
+                <button class="tab-btn active" onclick="openTab('dashboard')">
+                    <i class="fa-solid fa-gauge"></i> DASHBOARD
+                </button>
+                <button class="tab-btn" onclick="openTab('analytics')">
+                    <i class="fa-solid fa-chart-line"></i> ANALYTICS
+                </button>
+                <button class="tab-btn" onclick="openTab('network')">
+                    <i class="fa-solid fa-globe"></i> NETWORK
+                </button>
+                <button class="tab-btn" onclick="openTab('security')">
+                    <i class="fa-solid fa-shield-halved"></i> SECURITY
+                </button>
+            </nav>
+
+            <div class="header-right">
+                <div class="status-pill">
+                    <span class="dot-pulse"></span> 
+                    <span id="connection-status">NODE: US-EAST-1</span>
+                </div>
+                <button class="connect-btn" id="header-connect-btn" onclick="toggleWallet()">
+                    <i class="fa-solid fa-link"></i> CONNECT WALLET
+                </button>
+            </div>
+        </header>
+
+        <main class="content-area">
+
+            <section id="view-dashboard" class="view active-view">
+                <div class="hero-section">
+                    <div class="hero-left">
+                        <div class="label-box">/// SYSTEM V.5.2</div>
+                        <h1 class="glitch-title" data-text="NEURAL GRID">NEURAL GRID</h1>
+                        <p class="hero-desc">Advanced decentralized protocol visualization.</p>
+                        
+                        <div class="live-data">
+                            <div class="data-box">
+                                <span class="lbl">BITCOIN PRICE</span>
+                                <span class="val" id="btc-price">LOADING...</span>
+                            </div>
+                            <div class="data-box">
+                                <span class="lbl">GLOBAL LATENCY</span>
+                                <span class="val" id="global-latency">12ms</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hero-right">
+                        <div class="holo-card">
+                            <div class="card-top">CPU CORE <i class="fa-solid fa-microchip"></i></div>
+                            <div class="circular-progress">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path class="circle" stroke-dasharray="75, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                </svg>
+                                <div class="percentage">75%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <i class="fa-solid fa-bolt mod-icon"></i>
+                        <h3>VELOCITY</h3>
+                        <div class="mod-bar"><div class="mod-fill cyan-fill"></div></div>
+                    </div>
+                    <div class="module-card">
+                        <i class="fa-solid fa-server mod-icon"></i>
+                        <h3>UPTIME</h3>
+                        <div class="mod-bar"><div class="mod-fill purple-fill"></div></div>
+                    </div>
+                    <div class="module-card">
+                        <i class="fa-solid fa-database mod-icon"></i>
+                        <h3>STORAGE</h3>
+                        <div class="mod-bar"><div class="mod-fill white-fill"></div></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-analytics" class="view">
+                <div class="panel-full">
+                    <div class="panel-header">
+                        <h2><i class="fa-solid fa-list"></i> LIVE LEDGER</h2>
+                        <div class="filter-btns">
+                            <button class="filter active" onclick="filterData('ALL', this)">ALL</button>
+                            <button class="filter" onclick="filterData('MINING', this)">MINING</button>
+                            <button class="filter" onclick="filterData('TRANSFER', this)">TRANSFERS</button>
+                            <button class="filter" onclick="filterData('CONTRACT', this)">CONTRACTS</button>
+                        </div>
+                    </div>
+                    <div class="table-container">
+                        <table class="cyber-table">
+                            <thead>
+                                <tr>
+                                    <th>TX HASH</th>
+                                    <th>BLOCK</th>
+                                    <th>TYPE</th>
+                                    <th>VALUE</th>
+                                    <th>STATUS</th>
+                                </tr>
+                            </thead>
+                            <tbody id="analytics-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-network" class="view">
+                <div class="network-layout">
+                    <div class="node-map-container">
+                        <h3>GLOBAL NODE MAP</h3>
+                        <div class="world-map">
+                            <div class="map-point p-tokyo" id="point-tokyo" title="Tokyo"></div>
+                            <div class="map-point p-ny active-point" id="point-ny" title="New York"><div class="pulse-ring"></div></div>
+                            <div class="map-point p-london" id="point-london" title="London"></div>
+                            
+                            <div class="map-point p-bogota" id="point-bogota" title="Bogotá"></div>
+                            <div class="map-point p-santiago" id="point-santiago" title="Santiago"></div>
+                            <div class="map-point p-berlin" id="point-berlin" title="Berlin"></div>
+                            <div class="map-point p-singapore" id="point-singapore" title="Singapore"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="server-list">
+                        <h3>SELECT NODE (CLICK TO CONNECT)</h3>
+                        
+                        <div class="server-item active-server" onclick="selectServer('ny', this)">
+                            <div class="srv-icon"><i class="fa-solid fa-server"></i></div>
+                            <div class="srv-info"><strong>US-EAST-1</strong><small>Load: 45% | 12ms</small></div>
+                            <span class="badge ok">CONNECTED</span>
+                        </div>
+
+                        <div class="server-item" onclick="selectServer('tokyo', this)">
+                            <div class="srv-icon"><i class="fa-solid fa-server"></i></div>
+                            <div class="srv-info"><strong>ASIA-TOK-1</strong><small>Load: 12% | 180ms</small></div>
+                            <span class="badge ok">OPTIMAL</span>
+                        </div>
+
+                        <div class="server-item" onclick="selectServer('london', this)">
+                            <div class="srv-icon"><i class="fa-solid fa-server"></i></div>
+                            <div class="srv-info"><strong>EU-WEST-3</strong><small>Load: 88% | 110ms</small></div>
+                            <span class="badge warn">BUSY</span>
+                        </div>
+
+                        <div class="server-item" onclick="selectServer('bogota', this)">
+                            <div class="srv-icon"><i class="fa-solid fa-server"></i></div>
+                            <div class="srv-info"><strong>SA-BOG-1 (LATAM)</strong><small>Load: 25% | 45ms</small></div>
+                            <span class="badge ok">READY</span>
+                        </div>
+
+                        <div class="server-item" onclick="selectServer('santiago', this)">
+                            <div class="srv-icon"><i class="fa-solid fa-server"></i></div>
+                            <div class="srv-info"><strong>SA-SCL-2 (LATAM)</strong><small>Load: 10% | 55ms</small></div>
+                            <span class="badge ok">READY</span>
+                        </div>
+
+                        <div class="server-item" onclick="selectServer('berlin', this)">
+                            <div class="srv-icon"><i class="fa-solid fa-server"></i></div>
+                            <div class="srv-info"><strong>EU-BER-1</strong><small>Load: 65% | 115ms</small></div>
+                            <span class="badge ok">READY</span>
+                        </div>
+
+                        <div class="server-item" onclick="selectServer('singapore', this)">
+                            <div class="srv-icon"><i class="fa-solid fa-server"></i></div>
+                            <div class="srv-info"><strong>AS-SIN-3</strong><small>Load: 40% | 190ms</small></div>
+                            <span class="badge ok">READY</span>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="view-security" class="view">
+                <div class="security-center">
+                    <div class="radar-box">
+                        <div class="radar-screen">
+                            <div class="radar-sweep"></div>
+                            <div class="radar-dot d1"></div>
+                        </div>
+                        <div class="radar-stats">
+                            <h3>THREAT LEVEL</h3>
+                            <div class="threat-val" id="threat-val">SAFE</div>
+                        </div>
+                    </div>
+                    <div class="security-controls">
+                        <h3>SYSTEM INTEGRITY</h3>
+                        <div class="log-window" id="security-log">
+                            <div>> Initializing security protocol...</div>
+                            <div>> Firewall active.</div>
+                        </div>
+                        <div class="scan-area">
+                            <div class="progress-wrap"><div class="progress-fill" id="scan-bar"></div></div>
+                            <button class="mega-btn" onclick="runScan()">INITIATE DEEP SCAN</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="bottom-panel">
+            <div class="terminal-box" onclick="document.getElementById('cmd-input').focus()">
+                <div class="term-head">
+                    <span>root@nexus:~</span>
+                    <div class="dots"><span class="d r"></span><span class="d y"></span><span class="d g"></span></div>
+                </div>
+                <div class="term-body" id="term-log">
+                    <div>> System ready. Select a server in NETWORK tab.</div>
+                </div>
+                <div class="term-input">
+                    <span class="prompt">$</span>
+                    <input type="text" id="cmd-input" autocomplete="off">
+                </div>
+            </div>
+
+            <div class="stream-box">
+                <div class="term-head">LIVE METRICS <span class="blink-dot">●</span></div>
+                <div class="stream-row">
+                    <div class="s-item">
+                        <h2 id="tx-val">8.41M</h2>
+                        <small>TRANSACTIONS</small>
+                    </div>
+                    <div class="s-item">
+                        <h2 id="nodes-val">128</h2>
+                        <small>NODES</small>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
